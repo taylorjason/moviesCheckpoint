@@ -1,7 +1,11 @@
 package com.galvanize.moviesCheckpoint;
 
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -43,5 +47,20 @@ public class LessonController {
         lesson.setTitle(body.getTitle());
         this.repository.save(lesson);
         return this.repository.findById(id);
+    }
+
+    @GetMapping("/find/{title}")
+    public Lesson getByTitle(@PathVariable String title){
+        return this.repository.findByTitle(title);
+    }
+
+//    @GetMapping("/find/between")
+//    public Lesson getByTitle(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date date1, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date date2){
+//        return this.repository.findByDeliveredOnBetween(date1, date2);
+//    }
+
+    @GetMapping("/find/between")
+    public List<Lesson> getByTitle(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date date1, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date date2){
+        return this.repository.findByDeliveredOnBetween(date1, date2);
     }
 }
